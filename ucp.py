@@ -16,4 +16,4 @@ for line in fileinput.input():
         (cp,desc) = line.split(';')[0:2]
         desc = desc.lower().replace(' ','-')
         cp = cp.lower()
-        print '\t"{0}" : 0x{1},'.format(desc,cp)
+        print('\t"{0}" : 0x{1},'.format(desc,cp))
