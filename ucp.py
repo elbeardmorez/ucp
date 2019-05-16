@@ -14,11 +14,11 @@ def generate(source):
                                  else source), file=sys.stderr)
 
     for line in fileinput.input(source):
-    if emoticon_match.match(line) :
-        (cp,desc) = line.split(';')[0:2]
-        desc = desc.lower().replace(' ','-')
-        cp = cp.lower()
-        print('\t"{0}" : 0x{1},'.format(desc,cp))
+        if emoticon_match.match(line) :
+            (cp,desc) = line.split(';')[0:2]
+            desc = desc.lower().replace(' ','-')
+            cp = cp.lower()
+            print('\t"{0}" : 0x{1},'.format(desc,cp))
 
 
 parser = argparse.ArgumentParser(
