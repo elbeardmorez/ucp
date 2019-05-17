@@ -54,8 +54,8 @@ def generate(source):
     # build matches
     matches = []
     for line in fileinput.input(source):
-        (cp,desc) = line.split(';')[0:2]
-        desc = desc.lower().replace(' ','-')
+        (cp, desc) = line.split(';')[0:2]
+        desc = desc.lower().replace(' ', '-')
         cp = cp.lower()
         match = 0
         for _, match_on, rx in map_expressions_negative:
@@ -76,7 +76,7 @@ def generate(source):
 
     # build project map file
     for cp, desc in matches:
-        print('\t"{0}" : 0x{1},'.format(desc,cp))
+        print('\t"{0}" : 0x{1},'.format(desc, cp))
 
 
 def download(url, target):
