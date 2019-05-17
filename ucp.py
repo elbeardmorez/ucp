@@ -69,7 +69,9 @@ parser.add_argument(
     '-s', '--source', type=str, default='-',
     help="ICU codepoints data blob (default: stdin)")
 
-args = parser.parse_args(None if sys.argv[1:] else ['-h'])
+if not sys.argv[1:]:
+    parser.print_help(sys.stderr)
+    exit(0)
 
 source = args.source
 if args.download:
