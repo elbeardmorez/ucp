@@ -89,7 +89,7 @@ def download(url, target):
     try:
         f = open(target, 'w')
         f.close()
-    except Exception as e:
+    except Exception:
         print("cannot write to target file: %r" % (target), file=sys.stderr)
     try:
         http.urlretrieve(url, target)
