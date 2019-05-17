@@ -74,9 +74,9 @@ def generate(source):
             matches.append([cp, desc])
     print("# mapped %d codepoints" % (len(matches)), file=sys.stderr)
 
-    # build project map file
+    # build map file
     for cp, desc in matches:
-        print('\t"{0}" : 0x{1},'.format(desc, cp))
+        print('0x{0};{1}'.format(cp, desc))
 
 
 def download(url, target):
