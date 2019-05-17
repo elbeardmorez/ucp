@@ -20,12 +20,15 @@ def generate(source):
     print("src: %r" % ("[stdin]" if source == '-'
                                  else source), file=sys.stderr)
 
+    map_count = 0
     for line in fileinput.input(source):
         if emoticon_match.match(line) :
             (cp,desc) = line.split(';')[0:2]
             desc = desc.lower().replace(' ','-')
             cp = cp.lower()
             print('\t"{0}" : 0x{1},'.format(desc,cp))
+            map_count += 1
+    print("# mapped %d codepoints" % (map_count), file=sys.stderr)
 
 
 def download(url, target):
