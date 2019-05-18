@@ -33,9 +33,9 @@ parsers["d"] = {
 parsers["s"] = {
     "unicode-latest": [re.compile("^([^;]+[^ ])[ ]*;[^;]+;[ ]*([^#]+[^ ])[ ]*#[^[]+\[([0-9]+)\].*$"), "cdn"]}
 parsers["z"] = {
-    "unicode-latest": parsers['s']['unicode-latest'] }
+    "unicode-latest": parsers['s']['unicode-latest']}
 parsers["v"] = {
-    "unicode-latest": parsers['s']['unicode-latest'] }
+    "unicode-latest": parsers['s']['unicode-latest']}
 
 map_expressions_builtin = {
    '_emoji_': [0, re.compile('^0x1f[3-6][0-9a-f]{2}$')],
@@ -51,8 +51,8 @@ def build_targets(root, remote=True):
         versions_structure[n] = {n: []}
         sub_path = str(v) + ".0.0/ucd" if remote else "upstream"
         versions_structure[n][n] = [
-            ['u', sep.join([x.strip(sep) for x in \
-                      [root, sub_path, fns['u']]])]]
+            ['u', sep.join(
+                [x.strip(sep) for x in [root, sub_path, fns['u']]])]]
     for uv, v, fs in zip(list(range(6, latest + 1)),
                          list(range(1, 6)) + list(range(11, latest + 1)),
                          ["d", *(["dsz"] * 3), *(["dszv"] * 3)]):
@@ -62,8 +62,8 @@ def build_targets(root, remote=True):
         sub_path = "emoji/" + str(v) + ".0/" if remote else "upstream"
         for f in list(fs):
             versions_structure[nuv][nv].append(
-                [f, sep.join([x.strip(sep) for x in \
-                        [root, sub_path, fns[f]]])])
+                [f, sep.join(
+                    [x.strip(sep) for x in [root, sub_path, fns[f]]])])
 
 
 def parse_matchsets(matchsets):
@@ -120,8 +120,9 @@ def generate(source, version):
                     continue
 
                 # parse with parser
-                p = parsers[t][nuv] if nuv in parsers[t] \
-                                    else parsers[t]["unicode-latest"]
+                p = parsers[t][nuv] \
+                    if nuv in parsers[t] \
+                    else parsers[t]["unicode-latest"]
                 rx, bits = p[0], list(p[1])
                 m = rx.match(line)
                 if not m:
@@ -135,8 +136,8 @@ def generate(source, version):
                 # cleanup
                 description = d.lower().replace(' ', '-')
                 if ' ' in c:
-                    codepoint = ' '.join(hex(int(x, 16))
-                                           for x in c.split(' '))
+                    codepoint = ' '.join(
+                        hex(int(x, 16)) for x in c.split(' '))
                 else:
                     codepoint = hex(int(c.split('.')[0], 16))
                 # insert mapping(s)
