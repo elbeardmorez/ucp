@@ -18,8 +18,9 @@ latest = 12
 # upstream data
 url_root_default = "https://www.unicode.org/Public/"
 versions = OrderedDict(
-    {"unicode-" + str(v): v for v in range(5, latest + 1)})
-version_default = "unicode-" + str(latest)
+    {"unicode-" + str(v): v
+        for v in (list(range(5, latest + 1)) + ['latest'])})
+version_default = "unicode-latest"
 versions_structure = {}
 fns = {"u": "UnicodeData.txt", "d": "emoji-data.txt",
        "s": "emoji-sequences.txt", "z": "emoji-zwj-sequences.txt",
@@ -49,17 +50,26 @@ def build_targets(root, remote=True):
     sep = "/" if remote else os.sep
     for n, v in versions.items():
         versions_structure[n] = {n: []}
-        sub_path = str(v) + ".0.0/ucd" if remote else "upstream"
+        sub_path = "upstream"
+        if remote:
+            sub_path = "UCD/latest/ucd" \
+                if v == "latest" \
+                else str(v) + ".0.0/ucd"
         versions_structure[n][n] = [
             ['u', sep.join(
                 [x.strip(sep) for x in [root, sub_path, fns['u']]])]]
-    for uv, v, fs in zip(list(range(6, latest + 1)),
-                         list(range(1, 6)) + list(range(11, latest + 1)),
-                         ["d", *(["dsz"] * 3), *(["dszv"] * 3)]):
+    for uv, v, fs in zip(
+            list(range(6, latest + 1)) + ['latest'],
+            list(range(1, 6)) + list(range(11, latest + 1)) + ['latest'],
+            ["d", *(["dsz"] * 3), *(["dszv"] * 4)]):
         nuv = "unicode-" + str(uv)
         nv = "emoji-" + str(v)
         versions_structure[nuv][nv] = []
-        sub_path = "emoji/" + str(v) + ".0/" if remote else "upstream"
+        sub_path = "upstream"
+        if remote:
+            sub_path = "emoji/latest" \
+                if v == "latest" \
+                else "emoji/" + str(v) + ".0/"
         for f in list(fs):
             versions_structure[nuv][nv].append(
                 [f, sep.join(
