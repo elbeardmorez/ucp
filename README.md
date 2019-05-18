@@ -6,7 +6,12 @@ script for creating codepoint-to-name maps from ICU unicode codepoint data. its 
 this project was born out of a script originally found in the [emo](https://github.com/cmstrickland/emo) project, used for this very same purpose
 
 ## usage
-the raw datasets can currently be found under the following root url:
+briefly, the following command downloads and generates the latest supported emoji set
+```sh
+    $ ./ucp.py -d -g -o   # output at 'codepoints/unicode-12/unicode-12.map
+    $ ./ucp.py -d -g > results
+```
+verbosely.. the raw datasets can currently be found under the following root url:
 
   https://www.unicode.org/Public/
 
