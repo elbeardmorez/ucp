@@ -245,6 +245,10 @@ parser.add_argument(
     type=str, nargs='?', default=version_default,
     help="unicode version to target")
 parser.add_argument(
+    '-lt', '--list-targets', action='store_const',
+    const=True, default=False,
+    help="list unicode versions available for targeting")
+parser.add_argument(
     '-g', '--generate', action='store_const',
     const=True, default=False,
     help="generate the codepoints map")
@@ -285,3 +289,9 @@ if args.generate:
         exit(1)
     sys.argv = [sys.argv[0]]
     generate(source, version)
+if args.list_targets:
+    build_targets(args.url_root)
+    for nv in versions.keys():
+        print("version: '%s'" % (nv))
+        for snv in versions_structure[nv]:
+            print("  set: %s | %s" % (snv, versions_structure[nv][snv]))
