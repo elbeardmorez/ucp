@@ -111,7 +111,7 @@ def generate(source, version):
                 lines = f.readlines()
             if verbose:
                 print("processing %d lines of %r using parser type %r"
-                      % (len(lines), fp, t))
+                      % (len(lines), fp, t), file=sys.stderr)
             for line in [line.strip()
                          for line in lines]:
                 # skip blanks and comments
@@ -172,7 +172,8 @@ def generate(source, version):
         source = os.path.dirname(source)
 
     if verbose:
-        print("filtering %d codepoints" % (len(mappings)))
+        print("filtering %d codepoints" % (len(mappings)),
+              file=sys.stderr)
 
     # build matches
     matches = []
@@ -303,8 +304,9 @@ if args.generate:
 if args.list_targets:
     build_targets(args.url_root)
     for nv in versions.keys():
-        print("version: '%s'" % (nv))
+        print("version: '%s'" % (nv), file=sys.stderr)
         if not verbose:
             continue
         for snv in versions_structure[nv]:
-            print("  set: %s | %s" % (snv, versions_structure[nv][snv]))
+            print("  set: %s | %s" % (snv, versions_structure[nv][snv]),
+                  file=sys.stderr)
