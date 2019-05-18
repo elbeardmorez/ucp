@@ -105,6 +105,30 @@ optional arguments:
     # generating codepoints map
     mapped 1297 codepoints
 ```
+### listing maps
+```
+    $ ./ucp.py -g -ms "flag" -s codepoints/unicode-12/unicode-12.raw
+    # generating codepoints map
+    mapped 282 codepoints
+    0x2690;white-flag
+    0x2691;black-flag
+    0x26f3;flag-in-hole
+
+    ...
+
+    0x1f38c;crossed-flags
+    0x1f3c1;chequered-flag
+    0x1f3f3;waving-white-flag
+    0x1f3f4;black-flag
+
+    ...
+
+    0x1f3f4 0xe0067 0xe0062 0xe0065 0xe006e 0xe0067 0xe007f;flag:-england
+    0x1f3f4 0xe0067 0xe0062 0xe0073 0xe0063 0xe0074 0xe007f;flag:-scotland
+    0x1f3f4 0xe0067 0xe0062 0xe0077 0xe006c 0xe0073 0xe007f;flag:-wales
+    0x1f3f3 0xfe0f 0x200d 0x1f308;rainbow-flag
+    0x1f3f4 0x200d 0x2620 0xfe0f;pirate-flag
+```
 
 ## contributors
 - cmstrickland
