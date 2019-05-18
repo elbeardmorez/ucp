@@ -13,6 +13,7 @@ from functools import reduce
 
 cwd = os.path.dirname(sys.argv[0])
 verbose = False
+dump = False
 latest = 12
 # upstream data
 url_root_default = "https://www.unicode.org/Public/"
@@ -195,16 +196,19 @@ def generate(source, version):
     print("mapped %d codepoints" % (len(matches)), file=sys.stderr)
 
     # write map file
-    target = os.path.join(source, version + ".map")
-    f = None
-    try:
-        f = open(target, 'w')
-        f.write('\n'.join(matches))
-    except Exception:
-        print("cannot write to target file: %r" % (target),
-              file=sys.stderr)
-        f.close()
-        exit(1)
+    if dump:
+        target = os.path.join(source, version + ".map")
+        f = None
+        try:
+            f = open(target, 'w')
+            f.write('\n'.join(matches))
+        except Exception:
+            print("cannot write to target file: %r" % (target),
+                  file=sys.stderr)
+            f.close()
+            exit(1)
+    else:
+        print('\n'.join(matches))
 
 
 def download(source, version, target):
@@ -278,6 +282,11 @@ parser.add_argument(
          "arbitrary match strings. '[+]/-' prefixes can be used to" +
          "designate the matchset as a positive/negative filter")
 parser.add_argument(
+    '-o', '--dump', action='store_const',
+    const=True, default=False,
+    help="dump the generated map to the standard target version " +
+         "location and disable the default writing to stdout")
+parser.add_argument(
     '-v', '--verbose', action='store_const',
     const=True, default=False,
     help="increase the level of information output")
@@ -290,6 +299,7 @@ args = parser.parse_args()
 
 source = args.source
 version = args.target
+dump = args.dump
 verbose = args.verbose
 if args.download:
     target = os.path.join(cwd, 'codepoints', version)

@@ -24,7 +24,7 @@ the `--matchsets` option can be used to adjust the default builtin filter which 
 
 ```sh
 usage: ucp.py [-h] [-lt] [-t [TARGET]] [-d] [-u [URL_ROOT]] [-g] [-s SOURCE]
-              [-ms MATCHSETS] [-v]
+              [-ms MATCHSETS] [-o] [-v]
 
 Unicode Codepoints Parser
 
@@ -44,6 +44,8 @@ optional arguments:
                         comma delimited list of pre-defined matchsets and/or
                         arbitrary match strings. '[+]/-' prefixes can be used
                         todesignate the matchset as a positive/negative filter
+  -o, --dump            dump the generated map to the standard target version
+                        location and disable the default writing to stdout
   -v, --verbose         increase the level of information output
 ```
 
@@ -65,36 +67,36 @@ optional arguments:
 ```
 ### generating maps
 ```sh
-    $ ./ucp.py -g -ms "_emoji_" -t unicode-6 -s codepoints/unicode-6/unicode-6.raw
+    $ ./ucp.py -o -g -ms "_emoji_" -t unicode-6 -s codepoints/unicode-6/unicode-6.raw
     mapped 1006 codepoints
 
-    $ ./ucp.py -g -ms "_emoji_,flag" -t unicode-6 -s codepoints/unicode-6/unicode-6.raw
+    $ ./ucp.py -o -g -ms "_emoji_,flag" -t unicode-6 -s codepoints/unicode-6/unicode-6.raw
     mapped 1015 codepoints
 
-    $ ./ucp.py -g -ms "_emoji_,-flag" -t unicode-6 -s codepoints/unicode-12/unicode-12.raw
+    $ ./ucp.py -o -g -ms "_emoji_,-flag" -t unicode-6 -s codepoints/unicode-12/unicode-12.raw
     mapped 997 codepoints
 
-    $ ./ucp.py -g -ms "_emoji2_" -s codepoints/unicode/unicode-12.raw
+    $ ./ucp.py -o -g -ms "_emoji2_" -s codepoints/unicode/unicode-12.raw
     # generating codepoints map
     mapped 5887 codepoints
 
-    $ ./ucp.py -g -ms "_emoji2_,0x1f01" -s codepoints/unicode-12/unicode-12.raw
+    $ ./ucp.py -o -g -ms "_emoji2_,0x1f01" -s codepoints/unicode-12/unicode-12.raw
     # generating codepoints map
     mapped 5888 codepoints
 
-    $ ./ucp.py -g -ms "_emoji2_,0x1f0" -s codepoints/unicode-12/unicode-12.raw
+    $ ./ucp.py -o -g -ms "_emoji2_,0x1f0" -s codepoints/unicode-12/unicode-12.raw
     # generating codepoints map
     mapped 5913 codepoints
 
-    ./ucp.py -g -ms "_emoji2_,-church" -s codepoints/unicode-12/unicode-12.raw
+    ./ucp.py -o -g -ms "_emoji2_,-church" -s codepoints/unicode-12/unicode-12.raw
     # generating codepoints map
     mapped 5886 codepoints
 
-    ./ucp.py -g -ms "_emoji_" -s codepoints/unicode-12/unicode-12.raw
+    ./ucp.py -o -g -ms "_emoji_" -s codepoints/unicode-12/unicode-12.raw
     # generating codepoints map
     mapped 1024 codepoints
 
-    ./ucp.py -g -ms "_emoji_,flag" -s codepoints/unicode-12/unicode-12.raw
+    ./ucp.py -o -g -ms "_emoji_,flag" -s codepoints/unicode-12/unicode-12.raw
     # generating codepoints map
     mapped 1297 codepoints
 ```
