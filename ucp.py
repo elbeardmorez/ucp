@@ -12,6 +12,7 @@ from collections import OrderedDict
 from functools import reduce
 
 cwd = os.path.dirname(sys.argv[0])
+verbose = False
 latest = 12
 # upstream data
 url_root_default = "https://www.unicode.org/Public/"
@@ -68,7 +69,8 @@ def parse_matchsets(matchsets):
     matchsets = matchsets.split(',')
     for m in matchsets:
         m = m.strip()
-        print("parsing matchset: %r" % (m), file=sys.stderr)
+        if verbose:
+            print("parsing matchset: %r" % (m), file=sys.stderr)
         if m == "":
             continue  # discard empty
         map_expressions_target = map_expressions_positive
@@ -92,8 +94,9 @@ def parse_matchsets(matchsets):
 
 def generate(source, version):
     print("# generating codepoints map", file=sys.stderr)
-    print("src: %r" % ("[stdin]" if source == '-' else source),
-          file=sys.stderr)
+    if verbose:
+        print("src: %r" % ("[stdin]" if source == '-' else source),
+              file=sys.stderr)
 
     mappings = {}
     if os.path.isdir(source):
@@ -106,8 +109,9 @@ def generate(source, version):
             lines = []
             with open(fp, 'r') as f:
                 lines = f.readlines()
-            print("processing %d lines of %r using parser type %r"
-                  % (len(lines), fp, t))
+            if verbose:
+                print("processing %d lines of %r using parser type %r"
+                      % (len(lines), fp, t))
             for line in [line.strip()
                          for line in lines]:
                 # skip blanks and comments
@@ -167,7 +171,8 @@ def generate(source, version):
             mappings = f.readlines()
         source = os.path.dirname(source)
 
-    print("filtering %d codepoints" % (len(mappings)))
+    if verbose:
+        print("filtering %d codepoints" % (len(mappings)))
 
     # build matches
     matches = []
@@ -219,8 +224,9 @@ def download(source, version, target):
     for [t, url] in reduce(lambda l1, l2: l1 + l2,
                            versions_structure[nuv].values()):
         dest = os.path.join(target, fns[t])
-        print("src: %r" % (url), file=sys.stderr)
-        print("dest: %r" % (dest), file=sys.stderr)
+        if verbose:
+            print("src: %r" % (url), file=sys.stderr)
+            print("dest: %r" % (dest), file=sys.stderr)
 
         f = None
         try:
@@ -268,6 +274,10 @@ parser.add_argument(
 parser.add_argument(
     '-s', '--source', type=str, default='-',
     help="ICU codepoints data blob (default: stdin)")
+parser.add_argument(
+    '-v', '--verbose', action='store_const',
+    const=True, default=False,
+    help="increase the level of information output")
 
 if not sys.argv[1:]:
     parser.print_help(sys.stderr)
@@ -277,6 +287,7 @@ args = parser.parse_args()
 
 source = args.source
 version = args.target
+verbose = args.verbose
 if args.download:
     target = os.path.join(cwd, 'codepoints', version)
     download(args.url_root, version, target)
@@ -293,5 +304,7 @@ if args.list_targets:
     build_targets(args.url_root)
     for nv in versions.keys():
         print("version: '%s'" % (nv))
+        if not verbose:
+            continue
         for snv in versions_structure[nv]:
             print("  set: %s | %s" % (snv, versions_structure[nv][snv]))
