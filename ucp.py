@@ -248,33 +248,35 @@ parser = argparse.ArgumentParser(
     argument_default='-h',
     description='Unicode Codepoints Parser')
 parser.add_argument(
+    '-lt', '--list-targets', action='store_const',
+    const=True, default=False,
+    help="list unicode versions available for targeting")
+parser.add_argument(
     '-t', '--target', dest='target',
     type=str, nargs='?', default=version_default,
     help="unicode version to target")
 parser.add_argument(
-    '-lt', '--list-targets', action='store_const',
+    '-d', '--download', action='store_const',
     const=True, default=False,
-    help="list unicode versions available for targeting")
+    help="download ICU codepoints data")
+parser.add_argument(
+    '-u', '--url', dest='url_root', nargs='?',
+    default=url_root_default,
+    help="override default root url for ICU codepoints data")
 parser.add_argument(
     '-g', '--generate', action='store_const',
     const=True, default=False,
     help="generate the codepoints map")
 parser.add_argument(
-    '-d', '--download', action='store_const',
-    const=True, default=False,
-    help="download latest ICU codepoints data blob")
-parser.add_argument(
-    '-u', '--url', dest='url_root', nargs='?',
-    default=url_root_default,
-    help="set URL for ICU codepoints data blob")
+    '-s', '--source', type=str, default='-',
+    help="local path to either an ICU codepoints upstream data set or" +
+         "a collated '.raw' file (default: stdin)")
 parser.add_argument(
     '-ms', '--matchsets', dest='matchsets',
     default='_emoji2_',
-    help="comma delimited list of pre-defined matchsets" +
-         " and/or arbitrary match strings")
-parser.add_argument(
-    '-s', '--source', type=str, default='-',
-    help="ICU codepoints data blob (default: stdin)")
+    help="comma delimited list of pre-defined matchsets and/or " +
+         "arbitrary match strings. '[+]/-' prefixes can be used to" +
+         "designate the matchset as a positive/negative filter")
 parser.add_argument(
     '-v', '--verbose', action='store_const',
     const=True, default=False,
