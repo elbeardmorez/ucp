@@ -1,4 +1,5 @@
 *~
 *sw[po]
 *.pyc
-codepoint/*.raw
+codepoints/**/*.raw
+codepoints/**/upstream
