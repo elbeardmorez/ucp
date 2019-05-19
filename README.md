@@ -27,7 +27,7 @@ the `--generate` option can then be used to collate these files into a single, l
 
 the `--matchsets` option can be used to adjust the default builtin filter which is called `_emoji2_`. `--matchsets` takes a comma delimited list builtin matchset name(s) and/or arbitrary match strings. '[+]/-' prefixes can be used to designate whether the matchset is a positive (default) / negative (blacklist) filter. the negative filter is applied before the positive filter.
 
-```sh
+```
 usage: ucp.py [-h] [-lt] [-t [TARGET]] [-d] [-u [URL_ROOT]] [-g] [-s SOURCE]
               [-ms MATCHSETS] [-o] [-v]
 
@@ -131,5 +131,5 @@ optional arguments:
 ```
 
 ## contributors
-- cmstrickland
-- elbeardmorez
+- [cmstrickland](https://github.com/cmstrickland)
+- [elbeardmorez](https://github.com/elbeardmorez)
